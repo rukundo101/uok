@@ -6,7 +6,7 @@
 // They receive requests, process them, and send responses
 
 // Import required modules
-const bcrypt = require('bcrypt');           // For password hashing
+const bcrypt = require('bcryptjs');           // For password hashing
 const jwt = require('jsonwebtoken');        // For creating authentication tokens
 const User = require('../models/userModel'); // Our User model for database operations
 
