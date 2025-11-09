@@ -1,14 +1,32 @@
-# Render.com Deployment Configuration
-# This file tells Render how to build and run your app
+# =====================================================
+# Render Deployment Configuration for Node.js + PostgreSQL
+# =====================================================
+services:
+  - type: web
+    name: user-management-api
+    env: node
+    plan: free
+    region: oregon  # same region as your PostgreSQL database
+    buildCommand: npm install
+    startCommand: node server.js
 
-# Build Command (what Render runs to prepare your app)
-build: npm install
+    envVars:
+      # Environment variables Render will set automatically
+      - key: NODE_ENV
+        value: development
 
-# Start Command (what Render runs to start your server)
-start: node server.js
+      - key: PORT
+        value: 3000
 
-# Environment (Node.js version)
-node: 18
+      # ✅ Render PostgreSQL credentials
+      - key: DATABASE_URL
+        fromDatabase:
+          name: user-management-db-sr4p
+          property: connectionString
 
-# Health Check Path
-healthCheckPath: /health
+      - key: JWT_SECRET
+        value: ecbaa7c57a6b134cf5789562d59d9a0a73b251058090744c9a9a32b637b73251
+
+databases:
+  - name: user-management-db-sr4p
+    region: oregon
